@@ -1,6 +1,7 @@
 package org.example;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.Image;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -14,6 +15,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(loader.load());
         stage.setTitle("PromoPing - CodePad");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("nodecode.png")));
         stage.setScene(scene);
         stage.show();
     }
