@@ -19,18 +19,32 @@ if (-not (Test-Path $png)) {
 New-Item -ItemType Directory -Force -Path "dist" | Out-Null
 
 if (-not (Test-Path $ico)) {
-    try {
-        Add-Type -AssemblyName System.Drawing
-        $img = [System.Drawing.Image]::FromFile((Resolve-Path $png))
-        $icon = [System.Drawing.Icon]::FromHandle($img.GetHicon())
-        $fs = New-Object System.IO.FileStream((Resolve-Path "dist") + "\nodecode.ico", [System.IO.FileMode]::Create)
-        $icon.Save($fs)
-        $fs.Close()
-        $icon.Dispose()
-        $img.Dispose()
-        $ico = "dist\nodecode.ico"
-    } catch {
-        Write-Host "Falha ao converter PNG para ICO. Envie um .ico pronto." -ForegroundColor Yellow
+    $icoOut = (Resolve-Path "dist") + "\nodecode.ico"
+    $magick = Get-Command magick -ErrorAction SilentlyContinue
+    if ($magick) {
+        try {
+            & $magick.Source $png -define icon:auto-resize=256,128,64,48,32,24,16 $icoOut
+            if (Test-Path $icoOut) {
+                $ico = "dist\nodecode.ico"
+            }
+        } catch {
+            Write-Host "Falha ao gerar .ico com ImageMagick. Tentando conversao simples..." -ForegroundColor Yellow
+        }
+    }
+    if (-not (Test-Path $ico)) {
+        try {
+            Add-Type -AssemblyName System.Drawing
+            $img = [System.Drawing.Image]::FromFile((Resolve-Path $png))
+            $icon = [System.Drawing.Icon]::FromHandle($img.GetHicon())
+            $fs = New-Object System.IO.FileStream($icoOut, [System.IO.FileMode]::Create)
+            $icon.Save($fs)
+            $fs.Close()
+            $icon.Dispose()
+            $img.Dispose()
+            $ico = "dist\nodecode.ico"
+        } catch {
+            Write-Host "Falha ao converter PNG para ICO. Envie um .ico multi-tamanho (16-256)." -ForegroundColor Yellow
+        }
     }
 }
 
@@ -68,11 +82,15 @@ if (Test-Path $ico) {
     --dest $dest `
     --input $appDir `
     --name "PromoPingCodePad" `
+    --app-version "1.0.0" `
     --main-jar $jarName `
     --main-class "org.example.Main" `
     --module-path "target\javafx" `
     --add-modules "javafx.controls,javafx.fxml,javafx.graphics,javafx.base" `
     --win-menu --win-shortcut --win-dir-chooser `
+    --win-menu-group "PromoPingCodePad" `
+    --install-dir "PromoPingCodePad" `
+    --win-per-user-install `
     @iconArg
 
 Write-Host "Pronto. Instalador em dist\installer" -ForegroundColor Green
