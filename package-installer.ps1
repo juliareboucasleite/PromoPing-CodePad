@@ -48,6 +48,35 @@ if (-not (Test-Path $ico)) {
     }
 }
 
+if (-not (Test-Path $ico)) {
+    Write-Host "Icone ICO nao encontrado. Gere um .ico multi-tamanho (16-256)." -ForegroundColor Yellow
+    exit 1
+}
+
+# Validate multi-size ICO using ImageMagick if available
+$magick = Get-Command magick -ErrorAction SilentlyContinue
+if (-not $magick) {
+    Write-Host "ImageMagick nao encontrado. Instale para validar tamanhos do .ico." -ForegroundColor Yellow
+    exit 1
+}
+
+$identify = & $magick.Source "identify" -format "%w " (Resolve-Path $ico)
+if (-not $identify) {
+    Write-Host "Falha ao ler tamanhos do .ico." -ForegroundColor Yellow
+    exit 1
+}
+
+$sizes = $identify.Trim().Split(" ", [System.StringSplitOptions]::RemoveEmptyEntries) | Sort-Object -Unique
+$required = @(16,24,32,48,64,128,256)
+$missing = @()
+foreach ($s in $required) {
+    if ($sizes -notcontains $s.ToString()) { $missing += $s }
+}
+if ($missing.Count -gt 0) {
+    Write-Host ("ICO sem tamanhos: " + ($missing -join ", ") + ". Recrie o .ico multi-tamanho.") -ForegroundColor Yellow
+    exit 1
+}
+
 Write-Host "Build do projeto..." -ForegroundColor Cyan
 & .\mvnw -DskipTests package
 
