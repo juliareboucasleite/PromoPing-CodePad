@@ -401,10 +401,41 @@ public class EditorController {
         });
 
         data.area.addEventHandler(KeyEvent.KEY_TYPED, event -> {
+            if (data.codeMode && event.getCharacter() != null && event.getCharacter().length() == 1) {
+                char ch = event.getCharacter().charAt(0);
+                if (handleAutoPair(data.area, ch)) {
+                    event.consume();
+                    return;
+                }
+            }
             if (suggestMenu != null && suggestMenu.isShowing()) {
                 suggestMenu.hide();
             }
         });
+    }
+
+    private boolean handleAutoPair(CodeArea area, char ch) {
+        String closing = switch (ch) {
+            case '(' -> ")";
+            case '[' -> "]";
+            case '{' -> "}";
+            case '"' -> "\"";
+            case '\'' -> "'";
+            default -> null;
+        };
+        if (closing == null) {
+            return false;
+        }
+        String selected = area.getSelectedText();
+        if (selected != null && !selected.isEmpty()) {
+            area.replaceSelection(ch + selected + closing);
+            area.moveTo(area.getCaretPosition() - closing.length());
+            return true;
+        }
+        int caret = area.getCaretPosition();
+        area.insertText(caret, String.valueOf(ch) + closing);
+        area.moveTo(caret + 1);
+        return true;
     }
 
     private boolean tryExpandSnippet(TabData data) {
@@ -751,6 +782,22 @@ public class EditorController {
             }
             setMode(data, true);
         }
+    }
+
+    @FXML
+    public void handleRun() {
+        TabData data = getCurrentData();
+        if (data == null || !data.codeMode) {
+            return;
+        }
+        if (data.filePath == null || data.dirty) {
+            boolean saved = handleSaveInternal(false);
+            if (!saved) {
+                return;
+            }
+        }
+        String language = detectLanguage(data.filePath);
+        runCodeAsync(data, language);
     }
 
     private void showFindReplace(boolean focusReplace) {
