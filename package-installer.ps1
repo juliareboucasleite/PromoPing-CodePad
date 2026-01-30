@@ -111,7 +111,7 @@ if (Test-Path $ico) {
     --dest $dest `
     --input $appDir `
     --name "PromoPingCodePad" `
-    --app-version "1.0.0" `
+    --app-version "1.1.1" `
     --main-jar $jarName `
     --main-class "org.example.Main" `
     --module-path "target\javafx" `
