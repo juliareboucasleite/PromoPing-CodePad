@@ -9,14 +9,19 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("editor.fxml")
-        );
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("editor.fxml"));
 
         Scene scene = new Scene(loader.load());
         stage.setTitle("PromoPing - CodePad");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("nodecode.png")));
         stage.setScene(scene);
+        var controller = loader.getController();
+        if (controller instanceof org.example.controllers.EditorController editorController) {
+            stage.setOnCloseRequest(event -> {
+                event.consume();
+                editorController.requestExit();
+            });
+        }
         stage.show();
     }
 
