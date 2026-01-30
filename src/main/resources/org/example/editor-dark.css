@@ -1,0 +1,91 @@
+.root {
+    -fx-background-color: #0f1115;
+    -fx-font-family: "Montserrat", "Poppins", "Segoe UI", sans-serif;
+}
+
+.menu-bar {
+    -fx-background-color: #0f1115;
+    -fx-border-color: #23262e;
+    -fx-border-width: 0 0 1 0;
+}
+
+.menu-bar .label {
+    -fx-text-fill: #e5e7eb;
+    -fx-font-weight: 600;
+}
+
+.tab-pane {
+    -fx-background-color: #12151c;
+}
+
+.tab-header-area .tab-header-background {
+    -fx-background-color: #0f1115;
+    -fx-border-color: #23262e;
+    -fx-border-width: 0 0 1 0;
+}
+
+.tab-pane .tab {
+    -fx-background-radius: 10 10 0 0;
+    -fx-background-color: #1a1f2a;
+}
+
+.tab-pane .tab-label {
+    -fx-text-fill: #d1d5db;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: 600;
+}
+
+.status-bar {
+    -fx-background-color: #0f1115;
+    -fx-border-color: #23262e;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 6 12 6 12;
+}
+
+.status-bar .label {
+    -fx-text-fill: #9ca3af;
+}
+
+.code-area {
+    -fx-font-family: "JetBrains Mono", "Fira Code", "Consolas", "Monaco", monospace;
+    -fx-font-size: 13px;
+    -fx-background-color: #0f1115;
+}
+
+.code-area .text {
+    -fx-fill: #d6e2f0;
+}
+
+.lineno {
+    -fx-background-color: #151a22;
+    -fx-text-fill: #8b93a1;
+}
+
+.keyword {
+    -fx-fill: #4cc9f0;
+    -fx-font-weight: bold;
+}
+
+.comment {
+    -fx-fill: #8b98a7;
+    -fx-font-style: italic;
+}
+
+.string {
+    -fx-fill: #8ae234;
+}
+
+.number {
+    -fx-fill: #f4a261;
+}
+
+.paren, .brace, .bracket {
+    -fx-fill: #8b5cf6;
+}
+
+.semicolon {
+    -fx-fill: #6b7a8c;
+}

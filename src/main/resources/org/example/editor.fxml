@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="root"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.EditorController"
+            stylesheets="@editor-light.css"
+            styleClass="root"
+            prefWidth="980.0"
+            prefHeight="640.0">
+
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu text="Arquivo">
+                    <items>
+                        <MenuItem fx:id="miNewTab" text="Nova Aba" onAction="#handleNewTab" />
+                        <MenuItem fx:id="miOpen" text="Abrir..." onAction="#handleOpen" />
+                        <SeparatorMenuItem />
+                        <MenuItem fx:id="miSave" text="Salvar" onAction="#handleSave" />
+                        <MenuItem fx:id="miSaveAs" text="Salvar Como..." onAction="#handleSaveAs" />
+                        <SeparatorMenuItem />
+                        <MenuItem fx:id="miCloseTab" text="Fechar Aba" onAction="#handleCloseTab" />
+                        <MenuItem fx:id="miExit" text="Sair" onAction="#handleExit" />
+                    </items>
+                </Menu>
+                <Menu text="Editar">
+                    <items>
+                        <MenuItem fx:id="miUndo" text="Desfazer" onAction="#handleUndo" />
+                        <MenuItem fx:id="miRedo" text="Refazer" onAction="#handleRedo" />
+                        <SeparatorMenuItem />
+                        <MenuItem fx:id="miCut" text="Recortar" onAction="#handleCut" />
+                        <MenuItem fx:id="miCopy" text="Copiar" onAction="#handleCopy" />
+                        <MenuItem fx:id="miPaste" text="Colar" onAction="#handlePaste" />
+                        <SeparatorMenuItem />
+                        <MenuItem fx:id="miSelectAll" text="Selecionar Tudo" onAction="#handleSelectAll" />
+                        <SeparatorMenuItem />
+                        <MenuItem fx:id="miFind" text="Buscar" onAction="#handleFind" />
+                        <MenuItem fx:id="miReplace" text="Buscar e Substituir" onAction="#handleReplace" />
+                    </items>
+                </Menu>
+                <Menu text="Exibir">
+                    <items>
+                        <RadioMenuItem fx:id="miThemeLight" text="Tema Claro" onAction="#handleThemeLight" selected="true" />
+                        <RadioMenuItem fx:id="miThemeDark" text="Tema Escuro" onAction="#handleThemeDark" />
+                    </items>
+                </Menu>
+                <Menu text="Ajuda">
+                    <items>
+                        <MenuItem fx:id="miAbout" text="Sobre" onAction="#handleAbout" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+
+    <center>
+        <TabPane fx:id="tabPane" tabClosingPolicy="SELECTED_TAB" />
+    </center>
+
+    <bottom>
+        <HBox styleClass="status-bar" spacing="10">
+            <Label fx:id="lblStatus" text="Pronto" />
+        </HBox>
+    </bottom>
+</BorderPane>
