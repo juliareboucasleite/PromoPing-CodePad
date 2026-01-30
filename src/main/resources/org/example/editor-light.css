@@ -62,6 +62,16 @@
     -fx-fill: #1b2836;
 }
 
+.text-area {
+    -fx-font-family: "Segoe UI", "Tahoma", sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #ffffff;
+}
+
+.text-area .text {
+    -fx-fill: #111827;
+}
+
 .lineno {
     -fx-background-color: #e5e7eb;
     -fx-text-fill: #6b7280;
@@ -79,6 +89,19 @@
 .keyword {
     -fx-fill: #0a7ea4;
     -fx-font-weight: bold;
+}
+
+.type {
+    -fx-fill: #1d4ed8;
+    -fx-font-weight: 600;
+}
+
+.function {
+    -fx-fill: #b45309;
+}
+
+.identifier {
+    -fx-fill: #0f172a;
 }
 
 .comment {
