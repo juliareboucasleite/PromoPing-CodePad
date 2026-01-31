@@ -93,20 +93,64 @@
                 </menus>
             </MenuBar>
             <ToolBar>
-                <Button text="Novo" onAction="#handleNewTab" />
-                <Button text="Abrir" onAction="#handleOpen" />
-                <Button text="Salvar" onAction="#handleSave" />
-                <Button text="Salvar Como" onAction="#handleSaveAs" />
+                <Button text="Novo" onAction="#handleNewTab" graphicTextGap="6">
+                    <graphic>
+                        <Region styleClass="tb-icon icon-new" />
+                    </graphic>
+                </Button>
+                <Button text="Abrir" onAction="#handleOpen" graphicTextGap="6">
+                    <graphic>
+                        <Region styleClass="tb-icon icon-open" />
+                    </graphic>
+                </Button>
+                <Button text="Salvar" onAction="#handleSave" graphicTextGap="6">
+                    <graphic>
+                        <Region styleClass="tb-icon icon-save" />
+                    </graphic>
+                </Button>
+                <Button text="Salvar Como" onAction="#handleSaveAs" graphicTextGap="6">
+                    <graphic>
+                        <Region styleClass="tb-icon icon-saveas" />
+                    </graphic>
+                </Button>
                 <Separator orientation="VERTICAL" />
-                <Button text="Desfazer" onAction="#handleUndo" />
-                <Button text="Refazer" onAction="#handleRedo" />
+                <Button text="Desfazer" onAction="#handleUndo" graphicTextGap="6">
+                    <graphic>
+                        <Region styleClass="tb-icon icon-undo" />
+                    </graphic>
+                </Button>
+                <Button text="Refazer" onAction="#handleRedo" graphicTextGap="6">
+                    <graphic>
+                        <Region styleClass="tb-icon icon-redo" />
+                    </graphic>
+                </Button>
                 <Separator orientation="VERTICAL" />
-                <Button text="Recortar" onAction="#handleCut" />
-                <Button text="Copiar" onAction="#handleCopy" />
-                <Button text="Colar" onAction="#handlePaste" />
+                <Button text="Recortar" onAction="#handleCut" graphicTextGap="6">
+                    <graphic>
+                        <Region styleClass="tb-icon icon-cut" />
+                    </graphic>
+                </Button>
+                <Button text="Copiar" onAction="#handleCopy" graphicTextGap="6">
+                    <graphic>
+                        <Region styleClass="tb-icon icon-copy" />
+                    </graphic>
+                </Button>
+                <Button text="Colar" onAction="#handlePaste" graphicTextGap="6">
+                    <graphic>
+                        <Region styleClass="tb-icon icon-paste" />
+                    </graphic>
+                </Button>
                 <Separator orientation="VERTICAL" />
-                <Button text="Buscar" onAction="#handleFind" />
-                <Button text="Substituir" onAction="#handleReplace" />
+                <Button text="Buscar" onAction="#handleFind" graphicTextGap="6">
+                    <graphic>
+                        <Region styleClass="tb-icon icon-find" />
+                    </graphic>
+                </Button>
+                <Button text="Substituir" onAction="#handleReplace" graphicTextGap="6">
+                    <graphic>
+                        <Region styleClass="tb-icon icon-replace" />
+                    </graphic>
+                </Button>
             </ToolBar>
         </VBox>
     </top>

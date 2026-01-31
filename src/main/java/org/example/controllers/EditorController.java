@@ -510,19 +510,21 @@ public class EditorController {
     }
 
     private void updateEncodingStatus() {
-        TabData data = getCurrentData();
-        if (data == null || data.encoding == null || lblEncoding == null) {
+        if (lblEncoding == null) {
             return;
         }
-        lblEncoding.setText(data.encoding.label);
+        TabData data = getCurrentData();
+        FileEncoding encoding = data == null || data.encoding == null ? defaultEncoding : data.encoding;
+        lblEncoding.setText(encoding.label);
     }
 
     private void updateLineEndingStatus() {
-        TabData data = getCurrentData();
-        if (data == null || data.lineEnding == null || lblEol == null) {
+        if (lblEol == null) {
             return;
         }
-        lblEol.setText(data.lineEnding.label);
+        TabData data = getCurrentData();
+        LineEnding lineEnding = data == null || data.lineEnding == null ? defaultLineEnding : data.lineEnding;
+        lblEol.setText(lineEnding.label);
     }
 
     private void updateZoomStatus() {
@@ -569,10 +571,11 @@ public class EditorController {
             return;
         }
         TabData data = (TabData) tab.getUserData();
-        if (data == null || data.encoding == null) {
+        if (data == null) {
             return;
         }
-        switch (data.encoding) {
+        FileEncoding encoding = data.encoding == null ? defaultEncoding : data.encoding;
+        switch (encoding) {
             case ANSI -> miEncodingAnsi.setSelected(true);
             case UTF8 -> miEncodingUtf8.setSelected(true);
             case UTF8_BOM -> miEncodingUtf8Bom.setSelected(true);
@@ -586,10 +589,11 @@ public class EditorController {
             return;
         }
         TabData data = (TabData) tab.getUserData();
-        if (data == null || data.lineEnding == null) {
+        if (data == null) {
             return;
         }
-        switch (data.lineEnding) {
+        LineEnding lineEnding = data.lineEnding == null ? defaultLineEnding : data.lineEnding;
+        switch (lineEnding) {
             case CRLF -> miEolWindows.setSelected(true);
             case LF -> miEolUnix.setSelected(true);
             case CR -> miEolMac.setSelected(true);
@@ -1161,6 +1165,9 @@ public class EditorController {
         if (tab == null || data == null) {
             return;
         }
+        if (data.encoding == encoding && defaultEncoding == encoding) {
+            return;
+        }
         data.encoding = encoding;
         defaultEncoding = encoding;
         syncEncodingToggle(tab);
@@ -1178,6 +1185,9 @@ public class EditorController {
         Tab tab = tabPane.getSelectionModel().getSelectedItem();
         TabData data = getCurrentData();
         if (tab == null || data == null) {
+            return;
+        }
+        if (data.lineEnding == lineEnding && defaultLineEnding == lineEnding) {
             return;
         }
         data.lineEnding = lineEnding;
@@ -1722,6 +1732,10 @@ public class EditorController {
             }
             if (created) {
                 tabPane.getSelectionModel().selectFirst();
+                Tab selected = tabPane.getSelectionModel().getSelectedItem();
+                syncModeToggle(selected);
+                syncEncodingToggle(selected);
+                syncLineEndingToggle(selected);
                 updateStats();
                 updateLineColStatus();
                 updateSelectionStatus();
@@ -1733,6 +1747,48 @@ public class EditorController {
             return created;
         } catch (IOException ex) {
             return false;
+        }
+    }
+
+    private boolean restoreDraft(String title, String path, String codeMode, String language,
+                                 String encoding, String lineEnding, String content) {
+        Tab tab = new Tab(title == null || title.isBlank() ? "Sem Titulo" : title);
+        TabData data = buildCodeTab(tab, content == null ? "" : content);
+        data.filePath = (path == null || path.isBlank()) ? null : Paths.get(path);
+        data.language = (language == null || language.isBlank()) ? "java" : language;
+        data.pattern = patternForLanguage(data.language);
+        data.encoding = parseEncoding(encoding);
+        data.lineEnding = parseLineEnding(lineEnding);
+        if ("0".equals(codeMode)) {
+            setMode(data, false);
+        } else {
+            setMode(data, true);
+        }
+        tab.setUserData(data);
+        tabPane.getTabs().add(tab);
+        markDirty(tab, data.filePath == null && content != null && !content.isEmpty());
+        return true;
+    }
+
+    private FileEncoding parseEncoding(String value) {
+        if (value == null || value.isBlank()) {
+            return defaultEncoding;
+        }
+        try {
+            return FileEncoding.valueOf(value);
+        } catch (IllegalArgumentException ex) {
+            return defaultEncoding;
+        }
+    }
+
+    private LineEnding parseLineEnding(String value) {
+        if (value == null || value.isBlank()) {
+            return defaultLineEnding;
+        }
+        try {
+            return LineEnding.valueOf(value);
+        } catch (IllegalArgumentException ex) {
+            return defaultLineEnding;
         }
     }
 

@@ -13,7 +13,43 @@
     -fx-background-color: #e5e7eb;
     -fx-border-color: #d1d5db;
     -fx-border-width: 0 0 1 0;
+    -fx-spacing: 6;
 }
+
+.tool-bar .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #111827;
+    -fx-background-radius: 6;
+    -fx-padding: 4 8 4 8;
+}
+
+.tool-bar .button:hover {
+    -fx-background-color: #dbe2ea;
+}
+
+.tool-bar .button:pressed {
+    -fx-background-color: #cfd8e3;
+}
+
+.tb-icon {
+    -fx-min-width: 14;
+    -fx-min-height: 14;
+    -fx-max-width: 14;
+    -fx-max-height: 14;
+    -fx-background-color: #111827;
+}
+
+.icon-new { -fx-shape: "M7,1 L9,1 L9,7 L15,7 L15,9 L9,9 L9,15 L7,15 L7,9 L1,9 L1,7 L7,7 Z"; }
+.icon-open { -fx-shape: "M1,4 L6,4 L7,2 L15,2 L15,14 L1,14 Z"; }
+.icon-save { -fx-shape: "M2,2 L14,2 L14,14 L2,14 Z M4,2 L12,2 L12,6 L4,6 Z M5,9 L11,9 L11,12 L5,12 Z"; }
+.icon-saveas { -fx-shape: "M2,2 L14,2 L14,14 L2,14 Z M4,2 L12,2 L12,6 L4,6 Z M6,9 L10,9 L10,10 L12,10 L8,14 L4,10 L6,10 Z"; }
+.icon-undo { -fx-shape: "M7,3 L3,8 L7,13 L7,10 L13,10 L13,6 L7,6 Z"; }
+.icon-redo { -fx-shape: "M9,3 L13,8 L9,13 L9,10 L3,10 L3,6 L9,6 Z"; }
+.icon-cut { -fx-shape: "M3,3 L5,3 L8,6 L11,3 L13,3 L9,7 L13,11 L11,11 L8,8 L5,11 L3,11 L7,7 Z"; }
+.icon-copy { -fx-shape: "M5,5 L13,5 L13,13 L5,13 Z M3,3 L11,3 L11,11 L3,11 Z"; }
+.icon-paste { -fx-shape: "M4,3 L12,3 L12,15 L4,15 Z M6,1 L10,1 L10,4 L6,4 Z"; }
+.icon-find { -fx-shape: "M6,2 L10,2 L12,4 L12,8 L10,10 L6,10 L4,8 L4,4 Z M9,9 L14,14 L12,16 L7,11 Z"; }
+.icon-replace { -fx-shape: "M3,5 L9,5 L9,3 L13,7 L9,11 L9,9 L3,9 Z M13,11 L7,11 L7,13 L3,9 L7,5 L7,7 L13,7 Z"; }
 
 .menu-bar .label {
     -fx-text-fill: #111827;
